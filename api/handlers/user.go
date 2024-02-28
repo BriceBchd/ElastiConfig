@@ -1,19 +1,15 @@
 package handlers
 
 import (
+	"api/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type User struct {
-	ID       int    `json:"id"`
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
-}
-
+// RegisterHandler is a handler for the /register route
 func RegisterHandler(c *gin.Context) {
-	var user User
+	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -24,8 +20,9 @@ func RegisterHandler(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "User created"})
 }
 
+// LoginHandler is a handler for the /login route
 func LoginHandler(c *gin.Context) {
-	var user User
+	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
