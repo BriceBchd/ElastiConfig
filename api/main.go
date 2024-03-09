@@ -6,6 +6,7 @@ import (
 	"api/models"
 
 	"github.com/gin-gonic/gin"
+	"go.elastic.co/apm/module/apmgin"
 )
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 	models.ConnectDB()
 
 	router := gin.Default()
+	router.Use(apmgin.Middleware(router))
 
 	api := router.Group("/api")
 	api.POST("/register", controllers.Register)
